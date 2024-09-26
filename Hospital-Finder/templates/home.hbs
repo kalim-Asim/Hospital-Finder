@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="home.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/jpg">
+</head>
+
+<body>
+    <div class="min-h-screen flex bg-gradient-to-br" id="page-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-title">Patient Dashboard</div>
+            <ul class="menu-list">
+                <li class="menu-item">Overview</li>
+                <li class="menu-item">Doctors</li>
+                <li class="menu-item">Medical History</li>
+                <li class="menu-item">Tests & Analyzes</li>
+                <li class="menu-item">Messages</li>
+                <li class="menu-item">Departments</li>
+            </ul>
+            <div class="buttons-container">
+                <button class="edit-button"
+                    onclick="window.location.href='http://localhost:3001/edit-profile'">Edit</button>
+                <button class="logout-button"
+                    onclick="window.location.href='http://localhost:3001/login'">Logout</button>
+            </div>
+            <div class="dark-mode-toggle">
+                <label for="dark-mode-switch">Dark Mode</label>
+                <input type="checkbox" id="dark-mode-switch">
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Profile and Stats -->
+            <div class="profile-section">
+                <div class="profile-card">
+                    <img src="https://via.placeholder.com/100" alt="Profile" class="profile-img">
+                    <h2 class="profile-name">{{name}}</h2>
+                    <p class="profile-id">Patient ID: 7009-156-4588</p>
+                    <div class="profile-details">
+                        <p>Age: <span id="age">0</span></p>
+                        <p>Blood Group: <span id="blood-group">null</span></p>
+                        <p>Height: <span id="height">0m</span></p>
+                        <p>Weight: <span id="weight">0kg</span></p>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <h3>General Health</h3>
+                        <p id="general-health">null %</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Water Balance</h3>
+                        <p id="water-balance">null %</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity and Health Condition -->
+            <div class="activity-health">
+                <div class="activity-card">
+                    <h3>Your Activity</h3>
+                    <p>Activity Graph Placeholder</p>
+                </div>
+                <div class="health-condition-card">
+                    <h3>Your Health Conditions</h3>
+                    <p>Health Condition Graph Placeholder</p>
+                </div>
+            </div>
+
+            <!-- Doctor Appointments -->
+            <div class="appointments-section">
+                <h3>Doctor Appointments</h3>
+                <div class="appointments-list">
+                    <div class="appointment">
+                        <p class="doctor-name text-indigo-700">Dentist - Dr. Gorex Mathew</p>
+                        <p>9 AM</p>
+                    </div>
+                    <div class="appointment">
+                        <p class="doctor-name text-red-600">Cardiologist - Dr. Craig Gemx</p>
+                        <p>12 PM</p>
+                    </div>
+                    <div class="appointment">
+                        <p class="doctor-name text-purple-600">Orthopedist - Dr. Bruce Williams</p>
+                        <p>3 PM</p>
+                    </div>
+                    <div class="appointment">
+                        <p class="doctor-name text-green-600">Physician - Dr. Klera Knight</p>
+                        <p>4 PM</p>
+                    </div>
+                    <div class="appointment">
+                        <p class="doctor-name text-orange-600">Endocrinologist - Dr. Anni Roy</p>
+                        <p>5 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const email = "user@example.com";
+
+            fetch(`/user/${email}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        document.querySelector(".profile-name").textContent = data.name;
+                        document.querySelector(".profile-id").textContent = `Patient ID: ${data.patientId || 'N/A'}`;
+                        document.getElementById("age").textContent = data.age || 'N/A';
+                        document.getElementById("blood-group").textContent = data.bloodGroup || 'N/A';
+                        document.getElementById("height").textContent = data.height || 'N/A';
+                        document.getElementById("weight").textContent = data.weight || 'N/A';
+                        document.getElementById("general-health").textContent = `${data.generalHealth || 'N/A'}%`;
+                        document.getElementById("water-balance").textContent = `${data.waterBalance || 'N/A'}%`;
+                    }
+                })
+                .catch(error => console.error('Error fetching user data:', error));
+
+            const darkModeSwitch = document.getElementById('dark-mode-switch');
+            const pageContainer = document.getElementById('page-container');
+
+            // Load dark mode preference from localStorage
+            if (localStorage.getItem('dark-mode') === 'enabled') {
+                pageContainer.classList.add('dark-mode');
+                darkModeSwitch.checked = true;
+            }
+
+            darkModeSwitch.addEventListener('change', () => {
+                if (darkModeSwitch.checked) {
+                    pageContainer.classList.add('dark-mode');
+                    localStorage.setItem('dark-mode', 'enabled');
+                } else {
+                    pageContainer.classList.remove('dark-mode');
+                    localStorage.setItem('dark-mode', 'disabled');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
