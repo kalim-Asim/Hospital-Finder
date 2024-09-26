@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // MongoDB connection
-mongoose.connect("mongodb+srv://asim1306iiit:asim1306iiit@newcluster.vvih8.mongodb.net/Auth?retryWrites=true&w=majority&appName=newCluster")
+mongoose.connect("")
     .then(() => {
         console.log("Mongodb Connected");
     })
