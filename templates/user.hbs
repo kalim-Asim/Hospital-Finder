@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="user.css">
+    <title>Edit Profile</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/jpg">
+
+</head>
+
+<body>
+    <div class="form-container">
+        <form action="/edit-profile" method="POST">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="text" name="newName" placeholder="New Name" required>
+            <input type="text" name="enrollmentnumber" placeholder="Enrollment Number" required>
+            <input type="text" name="newEnrollmentnumber" placeholder="New Enrollment Number" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>
