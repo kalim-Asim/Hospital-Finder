@@ -1,36 +1,12 @@
 const express = require("express")
 const app = express()
 const path = require("path")
-// const hbs = require("hbs")
 const collection = require("../model/userModel")
 const templatePath = path.join(__dirname, '../../templates')
 app.use(express.static(path.join(__dirname, '../../src')));
 app.set("view engine", "hbs")
 app.set("views", templatePath)
 app.use(express.static('public'));
-const EditProfile = async (req, res) => {
-  try {
-    const email = req.body.email.toLowerCase().trim();
-    const updateData = {
-      bloodGroup: req.body.bloodGroup,
-      height: req.body.height,
-      weight: req.body.weight,
-      age: req.body.age,
-      generalHealth: req.body.generalHealth,
-      waterBalance: req.body.waterBalance
-    };
-
-    // Update the user's profile in the database
-    await collection.updateOne({ email: email }, { $set: updateData });
-
-    // Redirect to the user's profile or home page after successful update
-    res.redirect("/login"); // Or redirect to another page, e.g., `/home` or `/dashboard`
-  } catch (error) {
-    console.error("Error updating profile:", error);
-    res.status(500).send("An error occurred while updating your profile.");
-  }
-};
-
 
 const Signup = async (req, res) => {
   try {
@@ -58,16 +34,16 @@ const Login = async (req, res) => {
       res.render("Admin-Dashboard");
     }
     else if (!check) {
-      res.send("Email not found");
+      res.render("Error");
     }
     else if (check.password === req.body.password) {
       res.render("user-profile", { name: check.name, email: check.email, enrollmentnumber: check.enrollmentnumber });
     } else {
-      res.send("Wrong Password");
+      res.render("Error");
     }
   } catch (error) {
     console.error("Error during login: ", error);
-    res.send("An error occurred while processing your request");
+    res.render("Error");
   }
 }
 
@@ -79,13 +55,37 @@ const transporter = nodemailer.createTransport({
     pass: "xahx xtud izeh ckpc"
   }
 });
+
+const EditProfile = async (req, res) => {
+  try {
+    const email = req.body.email.toLowerCase().trim();
+    const updateData = {
+      bloodGroup: req.body.bloodGroup,
+      height: req.body.height,
+      weight: req.body.weight,
+      age: req.body.age,
+      generalHealth: req.body.generalHealth,
+      waterBalance: req.body.waterBalance
+    };
+
+    // Update the user's profile in the database
+    await collection.updateOne({ email: email }, { $set: updateData });
+
+    // Redirect to the user's profile or home page after successful update
+    res.redirect("/login"); // Or redirect to another page, e.g., `/home` or `/dashboard`
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).render("Error");
+  }
+};
+
 const ForgotPassword = async (req, res) => {
   try {
     const email = req.body.email.toLowerCase().trim();
     const user = await collection.findOne({ email: email });
 
     if (!user) {
-      return res.send("Email not found");
+      res.render("Error");
     }
 
     const resetToken = Math.random().toString(36).substr(2);
@@ -103,7 +103,7 @@ const ForgotPassword = async (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error("Error sending email: ", error);
-        return res.send("Error sending email");
+        return res.render("Error");
       }
       console.log("Email sent: " + info.response);
       res.send("Password reset link sent to your email.");
@@ -112,7 +112,6 @@ const ForgotPassword = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error!!" })
   }
 };
-
 
 const ResetPassword = async (req, res) => {
   try {

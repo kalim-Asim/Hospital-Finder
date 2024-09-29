@@ -7,11 +7,7 @@ const {
   ForgotPassword,
   ResetPassword } = require("../controller/userController")
 const route = express.Router();
-// const express = require("express")
-// const app = express()
 const path = require("path")
-const hbs = require("hbs")
-// const collection = require("../model/userModel")
 const templatePath = path.join(__dirname, '../../templates')
 app.use(express.static(path.join(__dirname, '../../src')));
 

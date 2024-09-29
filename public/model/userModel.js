@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 require('dotenv').config();
 
-
 const LoginSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -16,7 +15,7 @@ const LoginSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // New optional fields
+    // optional fields
     bloodGroup: {
         type: String,  // Example: "A+", "O-", etc.
         required: false
