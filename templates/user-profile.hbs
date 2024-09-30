@@ -135,11 +135,14 @@
                 <div class="stats-section">
                     <div class="stat-card">
                         <h3>General Health</h3>
-                        <p id="general-health">null %</p>
+                        <p id="general-health">Loading...</p>
+                        <canvas id="generalHealthChart" width="400" height="400"></canvas>
+
                     </div>
                     <div class="stat-card">
                         <h3>Water Balance</h3>
-                        <p id="water-balance">null %</p>
+                        <p id="water-balance">Loading...</p>
+                         <canvas id="waterbalance" width="400" height="400"></canvas>
                     </div>
                 </div>
             </div>
@@ -245,33 +248,46 @@
        document.addEventListener("DOMContentLoaded", () => {
     const email = localStorage.getItem('userEmail'); // Retrieve email from local storage
 
-            fetch(`/user/${email}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-                        document.querySelector(".profile-name").textContent = data.name;
-                        document.querySelector(".profile-id").textContent = `Patient ID: ${data.patientId || 'N/A'}`;
-                        document.getElementById("age").textContent = data.age || 'N/A';
-                        document.getElementById("blood-group").textContent = data.bloodGroup || 'N/A';
-                        document.getElementById("height").textContent = data.height || 'N/A';
-                        document.getElementById("weight").textContent = data.weight || 'N/A';
-                        document.getElementById("general-health").textContent = `${data.generalHealth || 'N/A'}%`;
-                        document.getElementById("water-balance").textContent = `${data.waterBalance || 'N/A'}%`;
-                    }
-                })
-                .catch(error => console.error('Error fetching user data:', error));
+    if (email) {
+      fetch(`http://localhost:3001/api/user/${email}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          document.querySelector(".profile-name").textContent = data.name || 'N/A';
+          document.querySelector(".profile-id").textContent = `Patient ID: ${data.patientId || 'N/A'}`;
+          document.getElementById("age").textContent = data.age || 'N/A';
+          document.getElementById("blood-group").textContent = data.bloodGroup || 'N/A';
+          document.getElementById("height").textContent = data.height + " cm" || 'N/A';
+          document.getElementById("weight").textContent = data.weight + " kg" || 'N/A';
+          document.getElementById("general-health").textContent = `${data.generalHealth || 'N/A'}%`;
+          document.getElementById("water-balance").textContent = `${data.waterBalance || 'N/A'}%`;
+        })
+        .catch(error => console.error('Error fetching user data:', error));
+    } else {
+      console.error("No email found in local storage. Redirecting to login...");
+      window.location.href = '/login';
+    }
+  
 
+    
+        });
+    </script>
+     <script>
+        document.addEventListener("DOMContentLoaded", () => {
             const darkModeSwitch = document.getElementById('dark-mode-switch');
             const pageContainer = document.getElementById('page-container');
+            let clickCount = 0;  // Initialize a counter for clicks
 
-            // Load dark mode preference from localStorage
-            if (localStorage.getItem('dark-mode') === 'enabled') {
-                pageContainer.classList.add('dark-mode');
-                darkModeSwitch.checked = true;
-            }
+            // Toggle dark mode based on odd or even clicks
+            darkModeSwitch.addEventListener('click', () => {
+                clickCount++;  // Increment the counter each time the switch is clicked
 
-            darkModeSwitch.addEventListener('change', () => {
-                if (darkModeSwitch.checked) {
+                if (clickCount % 2 === 1) {
+                    // Odd number of clicks: enable dark mode
                     pageContainer.classList.add('dark-mode');
                 } else {
                     // Even number of clicks: disable dark mode
