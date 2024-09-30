@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 const path = require("path")
-const collection = require("../model/userModel")
+const User = require("../model/userModel")
 const templatePath = path.join(__dirname, '../../templates')
 app.use(express.static(path.join(__dirname, '../../src')));
 app.set("view engine", "hbs")
@@ -15,7 +15,7 @@ const Signup = async (req, res) => {
       name: req.body.name,
       password: req.body.password
     }
-    await collection.insertMany([data]);
+    await User.insertMany([data]);
     res.render("login")
   }
   catch (error) {
@@ -28,7 +28,7 @@ const Login = async (req, res) => {
   try {
     const email = req.body.email.toLowerCase().trim();
     const password = req.body.password;
-    const check = await collection.findOne({ email: email });
+    const check = await User.findOne({ email: email });
 
     if (email === "admin123@gmail.com" && password === "admin123") {
       res.render("Admin-Dashboard");
@@ -37,7 +37,9 @@ const Login = async (req, res) => {
       res.render("Error");
     }
     else if (check.password === req.body.password) {
-      res.render("user-profile", { name: check.name, email: check.email, enrollmentnumber: check.enrollmentnumber });
+     
+                
+      res.json({ email: email, redirectUrl: "/user-profile" });
     } else {
       res.render("Error");
     }
@@ -69,7 +71,7 @@ const EditProfile = async (req, res) => {
     };
 
     // Update the user's profile in the database
-    await collection.updateOne({ email: email }, { $set: updateData });
+    await User.updateOne({ email: email }, { $set: updateData });
 
     // Redirect to the user's profile or home page after successful update
     res.redirect("/login"); // Or redirect to another page, e.g., `/home` or `/dashboard`
@@ -82,7 +84,7 @@ const EditProfile = async (req, res) => {
 const ForgotPassword = async (req, res) => {
   try {
     const email = req.body.email.toLowerCase().trim();
-    const user = await collection.findOne({ email: email });
+    const user = await User.findOne({ email: email });
 
     if (!user) {
       res.render("Error");
@@ -116,7 +118,7 @@ const ForgotPassword = async (req, res) => {
 const ResetPassword = async (req, res) => {
   try {
     const { email, newPassword } = req.body;
-    await collection.updateOne({ email: email }, { $set: { password: newPassword } });
+    await User.updateOne({ email: email }, { $set: { password: newPassword } });
     res.send("Password has been reset successfully. You can now log in.");
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error!!" })
