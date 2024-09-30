@@ -14,39 +14,38 @@
 <body>
   <div class="container">
     <h2>Edit Profile</h2>
-    <!-- edit-profile.hbs -->
-    <form action="/edit-profile" method="POST">
-      <div>
+    <!-- Edit Profile Form -->
+    <form action="http://localhost:3001/edit-profile" method="POST">
+      <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
       </div>
-      <div>
+      <div class="form-group">
         <label for="bloodGroup">Blood Group:</label>
         <input type="text" id="bloodGroup" name="bloodGroup" required>
       </div>
-      <div>
+      <div class="form-group">
         <label for="height">Height (cm):</label>
         <input type="number" id="height" name="height" required>
       </div>
-      <div>
+      <div class="form-group">
         <label for="weight">Weight (kg):</label>
         <input type="number" id="weight" name="weight" required>
       </div>
-      <div>
+      <div class="form-group">
         <label for="age">Age:</label>
         <input type="number" id="age" name="age" required>
       </div>
-      <div>
+      <div class="form-group">
         <label for="generalHealth">General Health (%):</label>
         <input type="number" id="generalHealth" name="generalHealth" required>
       </div>
-      <div>
+      <div class="form-group">
         <label for="waterBalance">Water Balance (%):</label>
         <input type="number" id="waterBalance" name="waterBalance" required>
       </div>
       <button type="submit">Save Changes</button>
     </form>
-
   </div>
 </body>
 

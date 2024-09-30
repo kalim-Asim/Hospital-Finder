@@ -4,7 +4,8 @@ require('dotenv').config();
 const LoginSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     name: {
         type: String,
@@ -42,6 +43,6 @@ const LoginSchema = new mongoose.Schema({
     }
 });
 
-const collection = new mongoose.model("collections", LoginSchema);
+const User = new mongoose.model("User", LoginSchema);
 
-module.exports = collection;
+module.exports = User;
