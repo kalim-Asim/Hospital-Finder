@@ -19,6 +19,7 @@ router.get('/user/:email', async (req, res) => {
   }
 });
 
+
 // Route to update user data by email
 router.put('/user/:email', async (req, res) => {
   try {

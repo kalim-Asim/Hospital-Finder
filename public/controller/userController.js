@@ -31,7 +31,7 @@ const Login = async (req, res) => {
     const check = await User.findOne({ email: email });
 
     if (email === "admin123@gmail.com" && password === "admin123") {
-      res.render("Admin-Dashboard");
+      res.redirect("/Admin-Dashboard");
     }
     else if (!check) {
       res.render("Error");

@@ -102,11 +102,15 @@
         <div class="sidebar" id="sidebar">
             <div class="sidebar-title">Patient Dashboard</div>
             <ul class="menu-list">
+               <li class="menu-item" id="bookAppointment">Book Appointments</li>
+
+
                 <li class="menu-item">Overview</li>
                 <li class="menu-item">Doctors</li>
                 <li class="menu-item">Medical History</li>
                 <li class="menu-item">Tests & Analyzes</li>
                 <li class="menu-item">Messages</li>
+               
                 <li class="menu-item">Departments</li>
             </ul>
             <div class="buttons-container">
@@ -241,6 +245,19 @@
                 }
             }
         });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Existing code...
+
+        // Event listener for Book Appointments
+        const bookAppointmentItem = document.getElementById('bookAppointment');
+        bookAppointmentItem.addEventListener('click', () => {
+            window.location.href = 'http://localhost:3001/book-appointment'; // Redirect to the booking page
+        });
+
+        // Dark mode toggle code...
     });
 </script>
 
