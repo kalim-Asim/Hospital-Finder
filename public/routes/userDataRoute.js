@@ -25,7 +25,12 @@ router.put('/user/:email', async (req, res) => {
     const email = req.params.email;
     const updatedData = req.body; // Get the data to update from the request body
 
-    const user = await User.findOneAndUpdate({ email: email }, updatedData, { new: true });
+    const user = await User.findOneAndUpdate({
+       email: email 
+      }, 
+      updatedData, {
+         new: true 
+      });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });

@@ -6,6 +6,96 @@
     <title>User Dashboard</title>
     <link rel="stylesheet" href="home.css">
     <link rel="icon" href="favicon.png" type="image/jpg">
+   <style>
+        /* Default light mode styles */
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3, h4, h5, h6, p {
+            transition: color 0.3s;
+        }
+
+        .sidebar {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .profile-section, .stats-section, .activity-health, .appointments-section {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .buttons-container button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Dark mode styles */
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .dark-mode h1, 
+        .dark-mode h2, 
+        .dark-mode h3, 
+        .dark-mode h4, 
+        .dark-mode h5, 
+        .dark-mode h6, 
+        .dark-mode p {
+            color: #1e40af;
+        }
+
+        .dark-mode .sidebar {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+        .dark-mode .profile-card {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+         .dark-mode .stat-card {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+         .dark-mode .activity-card {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+       .dark-mode .main-content {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+         .dark-mode .health-condition-card {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+       
+
+
+
+
+        .dark-mode .profile-section, 
+        .dark-mode .stats-section, 
+        .dark-mode .activity-health, 
+        .dark-mode .appointments-section {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        .dark-mode .buttons-container button {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
     <div class="min-h-screen flex bg-gradient-to-br" id="page-container">
@@ -46,10 +136,13 @@
                     <div class="stat-card">
                         <h3>General Health</h3>
                         <p id="general-health">Loading...</p>
+                        <canvas id="generalHealthChart" width="400" height="400"></canvas>
+
                     </div>
                     <div class="stat-card">
                         <h3>Water Balance</h3>
                         <p id="water-balance">Loading...</p>
+                         <canvas id="waterbalance" width="400" height="400"></canvas>
                     </div>
                 </div>
             </div>
@@ -71,6 +164,85 @@
             </div>
         </div>
     </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Assume generalHealthValue is fetched from your server or API
+       // const generalHealthValue ={data.generalHealth} ; // Replace with actual data (this is just an example)
+ const generalHealthValue =56;
+        // Calculate remaining health
+        const remainingHealth = 100 - generalHealthValue;
+
+        const ctx = document.getElementById('generalHealthChart').getContext('2d');
+
+        // Create the Pie chart
+        const generalHealthChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['General Health', 'Remaining Health'],
+                datasets: [{
+                    label: 'General Health',
+                    data: [generalHealthValue, remainingHealth], // Health and remaining health values
+                    backgroundColor: ['#4CAF50', '#FF6384'], // Green for health, Red for remaining
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Assume generalHealthValue is fetched from your server or API
+       // const generalHealthValue ={data.generalHealth} ; // Replace with actual data (this is just an example)
+ const generalHealthValue =80;
+        // Calculate remaining health
+        const remainingHealth = 100 - generalHealthValue;
+
+        const ctx = document.getElementById('waterbalance').getContext('2d');
+
+        // Create the Pie chart
+        const waterBalance = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['General Health', 'Remaining Health'],
+                datasets: [{
+                    label: 'General Health',
+                    data: [generalHealthValue, remainingHealth], // Health and remaining health values
+                    backgroundColor: ['#4CAF50', '#FF6384'], // Green for health, Red for remaining
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
 
     <script>
        document.addEventListener("DOMContentLoaded", () => {
@@ -101,21 +273,25 @@
     }
   
 
+    
+        });
+    </script>
+     <script>
+        document.addEventListener("DOMContentLoaded", () => {
             const darkModeSwitch = document.getElementById('dark-mode-switch');
             const pageContainer = document.getElementById('page-container');
+            let clickCount = 0;  // Initialize a counter for clicks
 
-            if (localStorage.getItem('dark-mode') === 'enabled') {
-                pageContainer.classList.add('dark-mode');
-                darkModeSwitch.checked = true;
-            }
+            // Toggle dark mode based on odd or even clicks
+            darkModeSwitch.addEventListener('click', () => {
+                clickCount++;  // Increment the counter each time the switch is clicked
 
-            darkModeSwitch.addEventListener('change', () => {
-                if (darkModeSwitch.checked) {
+                if (clickCount % 2 === 1) {
+                    // Odd number of clicks: enable dark mode
                     pageContainer.classList.add('dark-mode');
-                    localStorage.setItem('dark-mode', 'enabled');
                 } else {
+                    // Even number of clicks: disable dark mode
                     pageContainer.classList.remove('dark-mode');
-                    localStorage.setItem('dark-mode', 'disabled');
                 }
             });
         });
