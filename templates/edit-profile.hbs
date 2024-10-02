@@ -15,7 +15,7 @@
   <div class="container">
     <h2>Edit Profile</h2>
     <!-- Edit Profile Form -->
-    <form action="http://localhost:3001/edit-profile" method="POST">
+    <form id="editProfileForm">
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
@@ -47,6 +47,37 @@
       <button type="submit">Save Changes</button>
     </form>
   </div>
+
+  <script>
+    document.getElementById('editProfileForm').addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent default form submission
+
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('http://localhost:3001/edit-profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          window.location.href = result.redirectUrl; // Redirect to user profile
+        } else {
+          const errorText = await response.text();
+          console.error('Error updating profile:', errorText);
+          alert('Failed to update profile. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error during fetch:', error);
+        alert('An error occurred. Please try again later.');
+      }
+    });
+  </script>
 </body>
 
 </html>

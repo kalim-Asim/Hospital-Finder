@@ -5,7 +5,8 @@ const {
   Signup,
   Login,
   ForgotPassword,
-  ResetPassword } = require("../controller/userController")
+  ResetPassword,
+  Bookappointment } = require("../controller/userController")
 const route = express.Router();
 const path = require("path");
 const User = require("../model/userModel");
@@ -48,6 +49,6 @@ route.post("/login", Login);
 route.post("/forgot-password", ForgotPassword);
 route.post("/reset-password/:token", ResetPassword);
 route.post("/edit-profile", EditProfile);
-
+route.post("/book-appointment", Bookappointment);
 
 module.exports = route;

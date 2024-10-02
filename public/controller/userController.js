@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const path = require("path")
+const Appointment = require("../model/appointModel"); 
 const User = require("../model/userModel")
 const templatePath = path.join(__dirname, '../../templates')
 app.use(express.static(path.join(__dirname, '../../src')));
@@ -19,10 +20,34 @@ const Signup = async (req, res) => {
     res.render("login")
   }
   catch (error) {
-    res.status(500).json({ error: "Internal Server Error." })
+    res.status(500).json({ error: "Internal Server Error or try with different gmail." })
   }
 };
 
+const Bookappointment = async (req, res) => {
+  try {
+    const data = {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      doctor: req.body.doctor,
+      appointmentDate: req.body.appointmentDate,
+      appointmentTime: req.body.appointmentTime,
+      notes: req.body.notes,
+    };
+
+    // Save appointment to the database using insertMany
+    await Appointment.insertMany([data]);
+
+    // Render the user profile page after successful booking
+    res.render("user-profile");
+  } catch (error) {
+    console.error("Error booking appointment: ", error);
+    
+    // If there's an error, render an error page or send a proper error response
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 const Login = async (req, res) => {
   try {
@@ -60,7 +85,7 @@ const transporter = nodemailer.createTransport({
 
 const EditProfile = async (req, res) => {
   try {
-    const email = req.body.email.toLowerCase().trim();
+  const email = req.body.email.toLowerCase().trim();
     const updateData = {
       bloodGroup: req.body.bloodGroup,
       height: req.body.height,
@@ -73,8 +98,9 @@ const EditProfile = async (req, res) => {
     // Update the user's profile in the database
     await User.updateOne({ email: email }, { $set: updateData });
 
+
     // Redirect to the user's profile or home page after successful update
-    res.redirect("/login"); // Or redirect to another page, e.g., `/home` or `/dashboard`
+    res.json({ email: email, redirectUrl: "/user-profile" }); // Or redirect to another page, e.g., `/home` or `/dashboard`
   } catch (error) {
     console.error("Error updating profile:", error);
     res.status(500).render("Error");
@@ -130,5 +156,6 @@ module.exports = {
   Signup,
   Login,
   ForgotPassword,
-  ResetPassword
+  ResetPassword, 
+  Bookappointment
 }
