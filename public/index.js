@@ -11,7 +11,7 @@ const dotenv = require("dotenv")
 app.use(express.static(path.join(__dirname, '../src')));
 dotenv.config();
 
-// connectDB();
+connectDB();
 
 app.use(express.json())
 app.set("view engine", "hbs")
