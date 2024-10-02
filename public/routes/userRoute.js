@@ -26,11 +26,19 @@ route.get("/user-profile", (req, res) => res.render("user-profile"))
 route.get("/forgot-password", (req, res) => {
   res.render("forgot-password");
 })
+route.get('/Admin-Dashboard', (req, res) => {
+  // Handle the request to the admin dashboard
+  res.render("Admin-Dashboard");
+});
+
 route.get("/reset-password/:token", (req, res) => {
   res.render("reset-password", { token: req.params.token });
 });
 route.get("/edit-profile", async (req, res) => {
   res.render("edit-profile");
+});
+route.get("/book-appointment", (req, res) => {
+  res.render("book-appointment");  // Render your appointment booking page
 });
 
 
