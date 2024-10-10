@@ -30,7 +30,7 @@
         }
 
         .buttons-container button {
-            background-color: #007bff;
+            background-color: #fff;
             color: #fff;
             padding: 10px 20px;
             border: none;
@@ -51,12 +51,21 @@
         .dark-mode h5, 
         .dark-mode h6, 
         .dark-mode p {
-            color: #1e40af;
+            color: #fff;
+           
         }
 
         .dark-mode .sidebar {
             background-color: #1e1e1e;
             color: #ffffff;
+        }
+        .dark-mode .sidebar-title{
+           background-color: #1e1e1e;
+            color: #ffffff; 
+        }
+         .dark-mode .menu-item{
+           background-color: #1e1e1e;
+            color: #ffffff; 
         }
         .dark-mode .profile-card {
             background-color: #1e1e1e;
@@ -200,6 +209,98 @@
     
         });
     </script>
+    {{!-- <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const email = localStorage.getItem('userEmail'); // Retrieve email from local storage
+
+    if (email) {
+        // Fetch user profile information
+        fetch(`http://localhost:3001/api/user/${email}`)
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector(".profile-name").textContent = data.name || 'N/A';
+                document.querySelector(".profile-id").textContent = `Patient ID: ${data.patientId || 'N/A'}`;
+                document.getElementById("age").textContent = data.age || 'N/A';
+                document.getElementById("blood-group").textContent = data.bloodGroup || 'N/A';
+                document.getElementById("height").textContent = data.height + " cm" || 'N/A';
+                document.getElementById("weight").textContent = data.weight + " kg" || 'N/A';
+                document.getElementById("general-health").textContent = `${data.generalHealth || 'N/A'}`;
+                document.getElementById("water-balance").textContent = `${data.waterBalance || 'N/A'}%`;
+            })
+            .catch(error => console.error('Error fetching user data:', error));
+
+        // Fetch user appointments
+        fetch(`http://localhost:3001/api/user/${email}/appointments`)
+            .then(response => response.json())
+            .then(appointments => {
+                const appointmentsList = document.getElementById('appointments-list');
+                appointmentsList.innerHTML = ''; // Clear any existing content
+
+                // Check if appointments exist
+                if (appointments.length === 0) {
+                    appointmentsList.innerHTML = '<p>No appointments found for this user.</p>';
+                    return;
+                }
+
+                // Create appointment cards for each appointment
+                appointments.forEach(appointment => {
+                    const appointmentCard = document.createElement('div');
+                    appointmentCard.className = 'appointment-card';
+                    appointmentCard.innerHTML = `
+                        <h4>${appointment.doctor}</h4>
+                        <p><strong>Specialty:</strong> ${appointment.specialty}</p>
+                        <p><strong>Date:</strong> ${appointment.date}</p>
+                        <p><strong>Time:</strong> ${appointment.time}</p>
+                        <p><strong>Status:</strong> ${appointment.status}</p>
+                    `;
+                    appointmentsList.appendChild(appointmentCard);
+                });
+            })
+            .catch(error => console.error('Error fetching appointments:', error));
+    } else {
+        console.error("No email found in local storage. Redirecting to login...");
+        window.location.href = '/login';
+    }
+});
+
+    </script> --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+  const email = localStorage.getItem('userEmail');
+
+  if (email) {
+    // Fetch appointments from the backend
+    fetch(`http://localhost:3001/api/user/${email}/appointments`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(appointments => {
+        const appointmentsContainer = document.querySelector('.appointments-list');
+        appointmentsContainer.innerHTML = ''; // Clear any existing appointments
+
+        appointments.forEach(appointment => {
+          const appointmentCard = document.createElement('div');
+          appointmentCard.className = 'appointment-card';
+          appointmentCard.innerHTML = `
+            <h4>Doctor: ${appointment.doctor}</h4>
+            <p>Date: ${new Date(appointment.appointmentDate).toLocaleDateString()}</p>
+            <p>Time: ${appointment.appointmentTime}</p>
+            <p>Notes: ${appointment.notes || 'N/A'}</p>
+          `;
+          appointmentsContainer.appendChild(appointmentCard);
+        });
+      })
+      .catch(error => console.error('Error fetching appointments:', error));
+  } else {
+    console.error("No email found in local storage. Redirecting to login...");
+    window.location.href = '/login';
+  }
+});
+
+    </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -308,6 +409,7 @@
        
     });
 </script>
+
 
   
      <script>
