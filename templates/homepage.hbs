@@ -22,6 +22,72 @@
   <link rel="stylesheet"
     href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
     type="text/css">
+
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f9f9f9;
+        }
+    
+        .container {
+          width: 80%;
+          margin: 0 auto;
+          padding: 20px;
+        }
+    
+        h1 {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+    
+        .hospital-list {
+          display: flex;
+          gap: 20px;
+          justify-content: space-between;
+        }
+    
+        .hospital {
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          text-align: center;
+          width: 30%;
+        }
+    
+        .hospital img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+    
+        .hospital-info h2 {
+          margin: 10px 0;
+          font-size: 1.5em;
+          color: #333;
+        }
+    
+        .rating {
+          margin-top: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+        }
+    
+        .stars {
+          color: gold;
+          font-size: 1.2em;
+        }
+    
+        .rating span {
+          font-size: 1em;
+          color: #666;
+        }
+      </style>
 </head>
 
 <body>
@@ -101,6 +167,50 @@
       </div>
     </div>
     </section>
+
+    <div class="container">
+        <h1>Nearby Hospitals</h1>
+        <div class="hospital-list">
+          
+          <!-- Hospital 1 -->
+          <div class="hospital">
+            <img src="doc1.jpg" alt="Hospital 1">
+            <div class="hospital-info">
+              <h2>City Hospital</h2>
+              <div class="rating">
+                <div class="stars">★★★★★</div>
+                <span>4.5/5</span>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Hospital 2 -->
+          <div class="hospital">
+            <img src="doc2.avif" alt="Hospital 2">
+            <div class="hospital-info">
+              <h2>Green Valley Medical Center</h2>
+              <div class="rating">
+                <div class="stars">★★★★☆</div>
+                <span>4.0/5</span>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Hospital 3 -->
+          <div class="hospital">
+            <img src="doc3.jpg" alt="Hospital 3">
+            <div class="hospital-info">
+              <h2>Sunrise Healthcare</h2>
+              <div class="rating">
+                <div class="stars">★★★★★</div>
+                <span>5.0/5</span>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+      </div>
+    
     <!--End-->
     <!-- Footer Section -->
     <footer class="footer">

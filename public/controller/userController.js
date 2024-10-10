@@ -1,7 +1,8 @@
 const express = require("express")
 const app = express()
 const path = require("path")
-const Appointment = require("../model/appointModel"); 
+const Appointment = require("../model/appointModel");
+const Doctor = require("../model/doctorModel"); 
 const User = require("../model/userModel")
 const templatePath = path.join(__dirname, '../../templates')
 app.use(express.static(path.join(__dirname, '../../src')));
@@ -49,21 +50,43 @@ const Bookappointment = async (req, res) => {
   }
 };
 
+const AddDoctor = async (req, res) => {
+  try {
+    const data = {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      availableHours: req.body.doctor,
+      experience: req.body.experience,
+      speciality: req.body.speciality
+    };
+
+    // Save appointment to the database using insertMany
+    await Doctor.insertMany([data]);
+
+    // Render the user profile page after successful booking
+    res.render("Admin-Dashboard");
+  } catch (error) {
+    console.error("Error booking appointment: ", error);
+    
+    // If there's an error, render an error page or send a proper error response
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
 const Login = async (req, res) => {
   try {
     const email = req.body.email.toLowerCase().trim();
     const password = req.body.password;
     const check = await User.findOne({ email: email });
-
     if (email === "admin123@gmail.com" && password === "admin123") {
-      res.redirect("/Admin-Dashboard");
+      res.json({ redirectUrl: "/Admin-Dashboard" }); 
     }
     else if (!check) {
       res.render("Error");
     }
-    else if (check.password === req.body.password) {
-     
-                
+    else if (check.password === req.body.password) {   
       res.json({ email: email, redirectUrl: "/user-profile" });
     } else {
       res.render("Error");
@@ -97,7 +120,6 @@ const EditProfile = async (req, res) => {
 
     // Update the user's profile in the database
     await User.updateOne({ email: email }, { $set: updateData });
-
 
     // Redirect to the user's profile or home page after successful update
     res.json({ email: email, redirectUrl: "/user-profile" }); // Or redirect to another page, e.g., `/home` or `/dashboard`

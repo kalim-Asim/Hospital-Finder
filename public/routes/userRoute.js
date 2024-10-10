@@ -23,6 +23,7 @@ app.use(express.urlencoded({ extended: false }))
 route.get("/", (req, res) => res.render("homepage"))
 route.get("/login", (req, res) => res.render("login"))
 route.get("/signup", (req, res) => res.render("signup"))
+route.get("/add-doctor", (req, res) => res.render("add-doctor"))
 route.get("/user-profile", (req, res) => res.render("user-profile"))
 route.get("/forgot-password", (req, res) => {
   res.render("forgot-password");

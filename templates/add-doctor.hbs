@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="index.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.png" type="image/jpg">
+  <style>
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #357ABD;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Add Doctor's details</h2>
+
+    <!-- Edit Profile Form -->
+    <form action="http://localhost:3001/edit-profile" method="POST">
+    
+      <div class="form-group">
+        <label for="name">Doctor's Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="text" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Contact Information (Phone Number):</label>
+        <input type="number" id="contact" name="contact" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="availability">Availability Hours (Weekdays):</label>
+        <input type="number" id="availability" name="availability" required>
+      </div>
+
+      <div class="form-group">
+        <label for="experience">Experience (in years):</label>
+        <input type="number" id="experience" name="experience" required>
+      </div>
+
+      <div class="form-group">
+        <label for="speciality">Doctor's Speciality:</label>
+        <select id="speciality" name="speciality" required>
+          <option value="">Select a speciality</option>
+          <option value="Cardiology">Cardiology</option>
+          <option value="Dermatology">Dermatology</option>
+          <option value="Orthopedics">Orthopedics</option>
+          <option value="Pediatrics">Pediatrics</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Ophthalmology">Ophthalmology</option>
+          <option value="Gynecology">Gynecology</option>
+          <option value="Oncology">Oncology</option>
+        </select>
+      </div>
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</body>
+
+</html>
