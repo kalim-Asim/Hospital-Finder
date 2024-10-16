@@ -25,7 +25,7 @@ const Signup = async (req, res) => {
   }
 };
 
-const Bookappointment = async (req, res) => {
+ const Bookappointment = async (req, res) => {
   try {
     const data = {
       name: req.body.name,
@@ -81,8 +81,10 @@ const Login = async (req, res) => {
     const password = req.body.password;
     const check = await User.findOne({ email: email });
     if (email === "admin123@gmail.com" && password === "admin123") {
-      res.json({ redirectUrl: "/Admin-Dashboard" }); 
+      return res.json({ redirectUrl: "/Admin-Dashboard" });
+
     }
+
     else if (!check) {
       res.render("Error");
     }
