@@ -1,11 +1,11 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* General Dark Mode Styles */
 body {
   font-family: Arial, sans-serif;
+  background-color: #1c1b2e; /* Dark but slightly brighter purple/black background */
+  color: #e0e0e0; /* Light text color */
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .min-h-screen {
@@ -15,15 +15,16 @@ body {
 
 .sidebar {
   width: 25%;
-  background: linear-gradient(to bottom right, #3b82f6, #9333ea, #4f46e5);
+  background: #2a273b; /* Slightly brighter black-purple sidebar */
   padding: 20px;
-  color: white;
+  color: #e0e0e0;
 }
 
 .sidebar-title {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 30px;
+  color: #b794f4; /* Lighter purple */
 }
 
 .menu-list {
@@ -35,20 +36,25 @@ body {
   align-items: center;
   margin-bottom: 15px;
   cursor: pointer;
+  color: #e0e0e0;
+  transition: transform 0.2s ease-in-out; /* Smooth movement on hover */
+}
+
+.menu-item:hover {
+  transform: translateX(5px); /* Slight movement on hover */
+  color: #b794f4; /* Lighter purple on hover */
 }
 
 .menu-item i {
   margin-right: 10px;
-}
-
-.menu-item:hover {
-  color: #ddd;
+  color: #b794f4; /* Purple icons */
 }
 
 .main-content {
   width: 75%;
   padding: 40px;
-  background: linear-gradient(to bottom right, #fff, #e0f2fe);
+  background: #252440; /* Brightened purple-black background */
+  color: #e0e0e0;
 }
 
 .grid {
@@ -58,18 +64,25 @@ body {
 }
 
 .card {
-  background: linear-gradient(to bottom right, #7c3aed, #4338ca);
-  color: white;
+  background: #373159; /* Purple-black card background */
+  color: #e0e0e0;
   padding: 20px;
   border-radius: 10px;
   display: flex;
   align-items: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Slightly lighter shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Moves the card up slightly */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
 }
 
 .card i {
   font-size: 40px;
   margin-right: 15px;
+  color: #c084fc; /* Brightened purple icons */
 }
 
 .card h3 {
@@ -83,32 +96,44 @@ body {
 }
 
 .chart-card {
-  background: linear-gradient(to bottom right, #fff, #e0f2fe);
+  background: #2e2a4d; /* Brighter dark purple for chart cards */
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-5px); /* Slight hover movement */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .chart-card h3 {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 20px;
-  color: #1e3a8a;
+  color: #c084fc; /* Bright purple text */
 }
 
 .recent-activity {
   margin-top: 40px;
-  background: linear-gradient(to bottom right, #fff, #e0f2fe);
+  background: #2e2a4d;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recent-activity:hover {
+  transform: translateY(-5px); /* Slight hover movement */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .recent-activity h3 {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 20px;
-  color: #1e3a8a;
+  color: #c084fc;
 }
 
 .recent-activity ul {
@@ -118,10 +143,10 @@ body {
 .recent-activity li {
   display: flex;
   justify-content: space-between;
-  color: #1e40af;
+  color: #c2c2ff; /* Lighter text color */
   margin-bottom: 10px;
 }
 
 .recent-activity span {
-  color: #6b7280;
+  color: #8c8cbb; /* Slightly dimmed time text */
 }

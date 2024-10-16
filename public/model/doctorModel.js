@@ -4,11 +4,7 @@ require('dotenv').config();
 
 // Define the Doctor schema
 const doctorSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
+  name: {
     type: String,
     required: true,
   },
@@ -21,48 +17,18 @@ const doctorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  specialization: {
+  availableHours: {
     type: String,
     required: true,
   },
-  qualification: {
+  experience: {
     type: String,
     required: true,
   },
-  experienceYears: {
-    type: Number,
-    required: true,
-  },
-  department: {
+  speciality: {
     type: String,
     required: true,
-  },
-  availableDays: {
-    type: [String],  // Example: ['Monday', 'Wednesday', 'Friday']
-    required: true,
-  },
-  availableTime: {
-    from: {
-      type: String,  // Example: "09:00 AM"
-      required: true,
-    },
-    to: {
-      type: String,  // Example: "05:00 PM"
-      required: true,
-    },
-  },
-  patients: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Patient',  // Linking to the Patient model
-  }],
-  appointments: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Appointment',  // Linking to the Appointment model
-  }],
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  }
 });
 
 // Define the Doctor model
